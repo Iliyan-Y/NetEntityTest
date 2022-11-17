@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetEntity.Models;
 
 namespace NetEntity.Controllers;
@@ -41,5 +40,14 @@ public class Todo : Controller
     var existingTodo = todoList.Find(t => t.Id == id);
     if (existingTodo == null) return BadRequest("Todo not found");
     return Ok(existingTodo);
+  }
+
+
+  [HttpDelete("{id}")]
+  public async Task<ActionResult<CustomApiResponse>> DeleteOne(int id)
+  {
+    var existingTodo = todoList.Find(t => t.Id == id);
+    if (existingTodo == null) return BadRequest("Todo not found");
+    return Ok(new CustomApiResponse($"Todo {existingTodo.Title} deleted"));
   }
 }
