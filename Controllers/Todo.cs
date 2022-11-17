@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NetEntity.Models;
 
 namespace NetEntity.Controllers;
 
@@ -6,11 +8,18 @@ namespace NetEntity.Controllers;
 [ApiController]
 public class Todo : Controller
 {
+  private static List<Models.Todo> todoList = new();
+
   [HttpGet]
-  public async Task<IActionResult> Get()
+  public async Task<ActionResult<List<Models.Todo>>> Get()
   {
-    var todos = new List<Models.Todo>
-      { new() { Id = 0, Description = "test", Done = false, Title = "test title" } };
-    return Ok(todos);
+    return Ok(todoList);
+  }
+
+  [HttpPost]
+  public async Task<ActionResult<CustomApiResponse>> AddTodo(Models.Todo todo)
+  {
+    todoList.Add(todo);
+    return Ok(new CustomApiResponse("Success", todo));
   }
 }
