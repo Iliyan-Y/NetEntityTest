@@ -22,4 +22,24 @@ public class Todo : Controller
     todoList.Add(todo);
     return Ok(new CustomApiResponse("Success", todo));
   }
+
+  [HttpPatch]
+  public async Task<ActionResult<Models.Todo>> UpdateTodo(Models.Todo todo)
+  {
+    var existingTodo = todoList.Find(t => t.Id == todo.Id);
+    if (existingTodo == null) return BadRequest("Todo not found");
+    existingTodo.Description = todo.Description;
+    existingTodo.Done = todo.Done;
+    existingTodo.Title = todo.Title;
+
+    return Ok(existingTodo);
+  }
+
+  [HttpGet("{id}")]
+  public async Task<ActionResult<Models.Todo>> GetOne(int id)
+  {
+    var existingTodo = todoList.Find(t => t.Id == id);
+    if (existingTodo == null) return BadRequest("Todo not found");
+    return Ok(existingTodo);
+  }
 }
