@@ -6,6 +6,12 @@
 - .NET Entity
 - mysql
 
+## Requirements
+
+- dotnet ef
+
+## Preparation
+
 ## How to run:
 
 - comming soon 
